@@ -12,14 +12,14 @@
 
 <h2>Project status</h2>
  status:complete 
- <p>April 10, 2019</p>
+ <p>June 6, 2020</p>
  
 <h2>Resources</h2>
 <ul>
   <li><a href="https://www.mathworks.com/products/matlab.html" target="_blank">MATLAB</a></li>
   <li><a href="https://www.mathworks.com/help/signal/referencelist.html?type=app&s_tid=CRUX_topnav" target="_blank">ToolBox-Signal Processing Toolbox</a></li>
 </ul> 
-Installments:
+<h2>Installments</h2>
 MATLAB
 Plugins:
 	- Signal Processing Toolbox
