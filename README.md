@@ -2,7 +2,7 @@
 <h1 align="center">Sound Plot</h1>
   <p align="center"><strong>Music Generation and Analysis </strong>
   <p> Term Project</p>
-   <br>CSCI:185 Computer Programming II </p>
+   <br>EENG 341 Signals & Systems </p>
    
 
   <h2>About</h2>
