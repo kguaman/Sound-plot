@@ -1,0 +1,70 @@
+% Names:        Kelvin Guaman
+% Course:       Signals and Systems
+% Description:  Generates and plays the song
+
+
+
+%sampling frequency
+fs = 44100;
+
+
+% Notes 
+% key (keynumber,time,frequency)
+
+rest= key(0,36,fs); % rest
+Bb_short = key(50,19,fs); % shorter version of Bb
+Bb = key(50,15,fs);
+F_sharp = key(46,15,fs);
+Db = key(53,15,fs);
+B = key(51,15,fs);
+Ab = key(48,15,fs);
+F = key(45,15,fs);
+Eb = key(43,15,fs);
+
+
+% song Godzilla by Eminem featuring Juice WRLD
+
+line1 = [Bb,F_sharp,Bb_short,Bb_short,Bb_short,Bb_short,Db];
+line2 = [Bb_short,Bb_short,Bb_short,Bb_short,Bb_short,B];
+%line1 repeat
+%line2 repeat
+line3 = [Bb,F_sharp,F_sharp,F_sharp];
+line4 = [B,rest,Bb,rest,Bb,rest,Bb,rest,Bb,rest,Bb,rest];
+line5 = [F_sharp,rest,F_sharp,F_sharp];
+line6 = [B,B,Bb_short,Bb_short,Bb_short,Bb_short,Bb_short,Bb_short,Bb_short,rest];
+line7 = [Bb,rest,F_sharp,rest,Bb,rest,Bb_short,rest,Db,rest];
+line8 = [Ab,Ab,Bb_short,Bb_short,Bb_short,rest,Bb_short,Bb_short,Bb_short,Ab,Bb,rest];
+line9 = [F_sharp,F_sharp,Bb_short,Bb_short,B,rest,Bb,rest,F_sharp,rest];
+line10 = [Db,rest,rest,Bb,rest,Bb_short,Bb_short,B,Bb,rest,Bb,rest];
+line11 = [F_sharp,rest,Ab,F_sharp,F_sharp,F,F_sharp,F_sharp];
+line12 = [Ab,Ab,F_sharp,F,F_sharp];
+
+% Combine lines together to form song
+song = [line1 line2 line1 line2 line3 line4 line5 line6 line7 line8 line9 line10 line11 line12];
+
+
+% Play song 
+sound(song,fs,24);
+ 
+
+% Save song
+audiowrite('song.wav', song, fs);
+
+
+% Function that creates the wave
+
+function wave = key(p, n, fs)
+    t = 0:1/fs:4/n;
+    
+    % generate frequency
+    freq = 440*2^((p-49)/12);
+    
+    % mimics actual audio sound
+    % determine the values for a triangle shaped wave
+    mid = (t(1)+t(end))/2;
+    tri = -(abs(t-mid)-mid);
+    tri = tri./max(tri);
+    
+    % generate the wave 
+    wave = (sin(2*pi*freq*t)).*tri;
+end 

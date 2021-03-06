@@ -1,0 +1,129 @@
+Signals and Systems Term Project - Music Generation and Analysis
+
+Description: Creating music notes and plotting in time and frequency domain.
+
+Song: "Godzilla" by Eminem featuring Juice WRLD
+
+Members: Kelvin Guaman & David Cheng
+---------------------------------------------------------------------------------
+
+Installments:
+MATLAB
+Plugins:
+	- Signal Processing Toolbox
+---------------------------------------------------------------------------------
+STEPS
+
+1.	Open the two .m files in MATLAB. If prompted that file is not found in 
+	current folder or on the MATLAB path, click on option "Add to Path".
+2. 	Run the files (generate_song first, then run graph_song).
+
+
+---------------------------------------------------------------------------------
+Code Examples and what they do
+
+Ex1: Creating a note
+
+	note = key (keynumber,time,frequency)
+	Bb_short = key(50,21,fs);  
+	
+	% keynumber corresponds to a piano notes that is found in Wikipedia page.
+	% time is the duration of the note. Higher=shorter duration, Smaller=longer duration.
+	% fs is sampling frequency
+
+
+Ex2: Creating lines of notes
+Put the notes in the order they are played into lines. Multiple lines are created for 
+readability and reusiblity, if possible.
+	
+	line1 = [Bb,F_sharp,Bb_short,Bb_short,Bb_short,Bb_short,Db];
+	line2 = [Bb_short,Bb_short,Bb_short,Bb_short,Bb_short,B];
+
+	These two lines in the actual code are arranged in such way for reusability as the portion
+	of the song repeats these lines.
+
+
+Ex3: Function to create wave
+This function mimics actual sound audio from weak amplitude to strong amplitude. Then from
+strong amplitude to weak amplitude.
+
+	function wave = key(p, n, fs)
+    		t = 0:1/fs:4/n;
+    
+    		% generate frequency
+    		freq = 440*2^((p-49)/12);
+    
+    		% mimics actual audio sound
+    		% determine the values for a triangle shaped wave
+    		mid = (t(1)+t(end))/2;
+    		tri = -(abs(t-mid)-mid);
+    		tri = tri./max(tri);
+    
+    		% generate the wave 
+    		wave = (sin(2*pi*freq*t)).*tri;
+	end 
+
+
+Ex4: Playing the song
+	
+	sound(song,fs,24);
+
+	%fs is sample frequency and 24 in this case is 24 bits/sample.
+
+
+Ex5: Saving song
+
+	audiowrite('song.wav', song, fs);	
+	
+	% songs.wav is songfile
+	% song is name
+	% fs is sample frequency
+
+
+Ex6: Plotting Graph
+
+	% Plotting time domain graph [full]
+	subplot(3,1,1); % allow multiple plots in one display
+	t=linspace(0, N/fs, N); % evenly spaced x-axis given the maximum length
+	plot(t, data); % plot graph
+	title("Time Domain Graph [Full]"); % label title
+	ylabel ('Amplitude'); % label y-axis
+	xlabel ('Time [s]'); % label x-axis
+
+
+	% Plotting frequency domain graph
+	subplot(3,1,3); % allow multiple plots in one display
+	ts =1/fs; 
+	f = -fs/2:fs/(N-1):fs/2; % frequency data
+	z = fftshift(fft(data)); % DFT computed then rearranged
+	plot(f,abs(z));	% plot
+	xlim([-600 600]); % x-axis range
+	xlabel("Frequency(Hz)"); % label x-axis
+	ylabel ("Magnitude"); % label y-axis
+	title("Frequency Domain of Graph"); %label-title
+
+
+	% Plotting spectrogram 
+	figure(2) % graph on new window
+	spectrogram(data,256,218,800,fs,'yaxis'); % spectrogram using short-time Fourier transform
+	ylim([0,5]); % y-axis range
+	title("Spectrogram of Song Selection"); % label title
+
+
+Ex7: Creating spectrogram
+
+	spectrogram(x,window,noverlap,nfft,fs);
+	% uses nfft sampling points to calculate discrete Fourier transform.	
+	
+	ex:
+	spectrogram(orginal,256,218,800,800); 
+---------------------------------------------------------------------------------
+References
+Yi-Wen Chen (2020). Make A Song (https://www.mathworks.com/matlabcentral/fileexchange/65665-make-a-song), MATLAB Central File Exchange. Retrieved May 3, 2020.
+
+https://en.wikipedia.org/wiki/Piano_key_frequencies 
+
+https://www.youtube.com/watch?v=4Jqn6hQZugk
+	-Time frame 0:46-1:10
+
+MATLAB Help Center 
